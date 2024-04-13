@@ -28,8 +28,11 @@ client_pub.loop_start()
 
 for i in range (7):
     temperature_value = data_generator.generate_value()
+    packet_id = data_generator.packet_id
+    data = package_data(temperature_value, packet_id)
     client_pub.publish('TEMPERATURE', temperature_value)
     print(f'Publishing {temperature_value} to Topic: TEMPERATURE')
+    print(f'Packaged Data: {package_data(temperature_value,packet_id)}')
     time.sleep(2)
 
 client_pub.disconnect()
