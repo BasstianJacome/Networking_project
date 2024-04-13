@@ -1,14 +1,18 @@
-# data_packager.py
-
 import json
 from datetime import datetime
 
-def package_data(value, packet_id):
+def package_data(temperature_value, packet_id):
+    # Get the current timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Create a dictionary to represent the data
     data = {
-        'value': value,
-        'timestamp': timestamp,
-        'packet_id': packet_id
-        # Add any other metadata you need
+        "timestamp": timestamp,
+        "temperature": temperature_value,
+        "packet_id": packet_id
     }
-    return json.dumps(data)
+
+    # Convert the dictionary to a JSON string
+    json_data = json.dumps(data)
+
+    return json_data
