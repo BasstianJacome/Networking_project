@@ -1,5 +1,4 @@
-# publisher.py
-
+# Import the necessary libraries
 import paho.mqtt.client as mqtt
 import time
 from data_generator import DataGenerator
@@ -15,18 +14,16 @@ def on_connect(client, userdata, flags, rc):
     else:
         print("Connection failed")
 
-def on_publish(client, userdata, mid):
-    print("Message published")
 
+def on_publish(client, userdata, mid):
+    print(f'Message published with message ID: {mid}')
 # Initialize MQTT client with callback functions
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id='Temperature')
 client.on_connect = on_connect
 client.on_publish = on_publish
 
 # Connect to broker
-
-# We need to implement the broker 
-client.connect("BROKER_NEEDED", 1883)
+client.connect('mqtt.eclipseprojects.io', 1883)
 
 # Publish data at regular intervals
 while True:
