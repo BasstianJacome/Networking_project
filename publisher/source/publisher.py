@@ -2,15 +2,31 @@
 
 import paho.mqtt.client as mqtt
 import time
-from DataGenerator import DataGenerator
-from Data_packager import package_data
+from data_generator import DataGenerator
+from data_packager import package_data
 
 # Initialize DataGenerator
 data_generator = DataGenerator()
 
-# Initialize MQTT client
+# Define callback functions
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to broker")
+    else:
+        print("Connection failed")
+
+def on_publish(client, userdata, mid):
+    print("Message published")
+
+# Initialize MQTT client with callback functions
 client = mqtt.Client()
-client.connect("broker.example.com", 1883)
+client.on_connect = on_connect
+client.on_publish = on_publish
+
+# Connect to broker
+
+# We need to implement the broker 
+client.connect("BROKER_NEEDED", 1883)
 
 # Publish data at regular intervals
 while True:
@@ -25,4 +41,3 @@ while True:
     client.publish("temperature_topic", data)
 
     time.sleep(1)  # Adjust interval as needed
-
