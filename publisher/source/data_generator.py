@@ -15,7 +15,7 @@ Yeshi Ngawang
 import random
 import time
 
-start_id = 123  # Initial sequence number
+start_id = 10  # Initial sequence number
 
 def create_data():
     global start_id
