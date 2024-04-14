@@ -1,3 +1,17 @@
+'''
+LAB 11 - Group 3
+
+Course and Section: COMP216-003 (2024-Winter)
+Professor: Rissan Devaraja
+Deadline: 2024-03-30
+
+Amanda Yuri Monteiro Ike
+Oluwatobiloba Abel
+Rithin Peter
+Vinicio Jacome Gomez
+Yeshi Ngawang
+'''
+
 import json
 from datetime import datetime
 

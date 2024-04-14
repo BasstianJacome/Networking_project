@@ -1,12 +1,28 @@
+'''
+LAB 11 - Group 3
+
+Course and Section: COMP216-003 (2024-Winter)
+Professor: Rissan Devaraja
+Deadline: 2024-03-30
+
+Amanda Yuri Monteiro Ike
+Oluwatobiloba Abel
+Rithin Peter
+Vinicio Jacome Gomez
+Yeshi Ngawang
+'''
+
+
+
 import paho.mqtt.client as mqtt
 import time
-from data_generator import DataGenerator
+from data_generator import create_data
 from data_packager import package_data
 
 # Initialize DataGenerator
-data_generator = DataGenerator()
+data_generator = create_data()
 
-BROKER = 'mqtt.eclipseprojects.io'
+BROKER = 'localhost'
 PORT = 1883
 
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -25,14 +41,30 @@ client_pub.on_publish=on_publish
 client_pub.on_disconnect=on_disconnect
 client_pub.connect(BROKER, port=PORT)
 client_pub.loop_start()
-
-for i in range (7):
-    temperature_value = data_generator.generate_value()
-    packet_id = data_generator.packet_id
-    data = package_data(temperature_value, packet_id)
-    client_pub.publish('TEMPERATURE', data)
+'''
+for i in range(7):
+    data = create_data()  # Generate sample data directly
+    temperature_value = data['air_temp']  # Extract temperature value from sample data
+    packet_id = data['id']  # Extract packet ID from sample data
+    packaged_data = package_data(temperature_value, packet_id)
+    client_pub.publish('TEMPERATURE', packaged_data)
     print(f'Publishing {temperature_value} to Topic: TEMPERATURE')
-    print(f'Packaged Data: {data}')
+    print(f'Packaged Data: {packaged_data}')
     time.sleep(2)
+'''
+
+
+
+while True:
+    data = create_data()  # Generate sample data directly
+    temperature_value = data['air_temp']  # Extract temperature value from sample data
+    packet_id = data['id']  # Extract packet ID from sample data
+    packaged_data = package_data(temperature_value, packet_id)
+    client_pub.publish('TEMPERATURE', packaged_data)
+    print(f'Publishing {temperature_value} to Topic: TEMPERATURE')
+    print(f'Packaged Data: {packaged_data}')
+    time.sleep(1)  # Wait for 1 second before publishing the next data
+
+
 
 client_pub.disconnect()
