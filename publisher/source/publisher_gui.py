@@ -11,7 +11,7 @@ class PublisherGUI:
         self.root = root
         self.root.title("MQTT Publisher")
         self.create_widgets()
-        self.client_pub = Client(client_id=f"client_{randint(100, 200)}", protocol=mqtt.MQTT_CLIENT, callback_api_version=CallbackAPIVersion.VERSION2)
+        self.client_pub = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id='Yeshi')
         self.client_pub.connect("localhost", 1883)
         self.running = False
 
@@ -64,12 +64,12 @@ class PublisherGUI:
         wind = data.get('winds', 'N/A')
         humidity = data.get('humidity')
         packaged_data = package_data(temperature_value, packet_id)
-        self.client_pub.publish('TEMPERATURE', packaged_data)
-        display_text = f'Packet ID: {packet_id}\n'
-        display_text += f'Temperature: {temperature_value}°C\n'
+        self.client_pub.publish('TEMPERATURE', packaged_data)  # Publish data to the 'TEMPERATURE' topic
+        display_text = f'Temperature: {temperature_value}°C\n'
         display_text += f'Timestamp: {timestamp}\n'
+        display_text += f'Packet ID: {packet_id}\n'
         display_text += f'Wind: {wind} km/h\n'
-        display_text += f'Humididty: {humidity}\n\n'
+        display_text += f'Humidity: {humidity}\n\n'
         self.result_text.insert(tk.END, display_text)
         self.root.after(1000, self.publish_data)
 
