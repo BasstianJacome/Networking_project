@@ -52,7 +52,7 @@ class PublisherGUI:
     def stop_publishing(self):
         self.status_label.config(text="Stopped publishing")
         self.running = False
-        self.client_pub.disconnect()
+     
 
     def publish_data(self):
         if not self.running:
